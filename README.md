@@ -1,6 +1,8 @@
 # recipta
 Consumer side reference app in the OFR ecosystem
 
+![Ecosystem](ecosys.png)
+
 # Recipta
 
 Recipta is an open-source, **local-first receipt vault** designed to store, manage, and analyze digital receipts that conform to the **Open Receipt Format (ORF)**.
@@ -110,7 +112,7 @@ Recipta is a **personal data tool**, not a platform.
 
 ## High-Level Architecture
 
-
+![Recipta-Tommy Interaction](Recipta-Tommy-interaction.png)
 
 All operations occur on-device unless explicitly authorized.
 
