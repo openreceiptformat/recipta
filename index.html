@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipta - Open Receipt Format (ORF) Consumer App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        nav {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #555;
+            margin: 1.5rem 0 0.8rem 0;
+            font-size: 1.3rem;
+        }
+
+        h4 {
+            color: #666;
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-left: 4px solid #667eea;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .architecture-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .architecture-diagram img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .ecosystem-image {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .ecosystem-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .tech-spec {
+            background: #f1f3f4;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .github-link {
+            display: inline-block;
+            background: #24292e;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .github-link:hover {
+            background: #0366d6;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Recipta</h1>
+            <p>Consumer side reference app in the OFR ecosystem - Local-first receipt vault for Open Receipt Format (ORF)</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#principles">Core Principles</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#contributing">Contributing</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="overview">
+            <h2>What is Recipta?</h2>
+            <p>Recipta is an open-source, <strong>local-first receipt vault</strong> designed to store, manage, and analyze digital receipts that conform to the <strong>Open Receipt Format (ORF)</strong>.</p>
+            
+            <div class="highlight">
+                <p><strong>All receipts are stored on the user's device.</strong><br>
+                There is <strong>no cloud sync by default</strong>.</p>
+            </div>
+
+            <p>Recipta exists to give individuals long-term, private access to their receipts — independent of merchants, email inboxes, or platforms.</p>
+
+            <div class="ecosystem-image">
+                <h3>ORF Ecosystem</h3>
+                <img src="ecosys.png" alt="ORF Ecosystem Diagram">
+            </div>
+        </section>
+
+        <section id="principles">
+            <h2>Core Principles</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>1. Local-Only by Default</h4>
+                    <ul>
+                        <li>Receipts are stored on-device</li>
+                        <li>No background uploads</li>
+                        <li>No third-party analytics</li>
+                        <li>No account required</li>
+                    </ul>
+                    <p>Cloud sync or export is <strong>explicitly opt-in</strong> and user-controlled.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>2. ORF-Native Storage</h4>
+                    <p>Recipta stores receipts as:</p>
+                    <ul>
+                        <li>Canonical ORF JSON</li>
+                        <li>Optional rendered views (HTML / PDF)</li>
+                    </ul>
+                    <p>This ensures portability, longevity, and vendor independence.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>3. Claim-Based Ingestion</h4>
+                    <p>Recipta does not scrape inboxes or intercept payments.</p>
+                    <p>Receipts enter Recipta via:</p>
+                    <ul>
+                        <li>NFC / QR receipt claims (e.g. from Tommy the Tapir)</li>
+                        <li>Receipt URLs</li>
+                        <li>File import (ORF JSON)</li>
+                    </ul>
+                    <p>The user always initiates ingestion.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="relationship">
+            <h2>Relationship to Other Projects</h2>
+            
+            <h3>Open Receipt Format (ORF)</h3>
+            <ul>
+                <li>ORF defines the receipt data model</li>
+                <li>Recipta consumes ORF receipts without modification</li>
+                <li>Recipta does not extend or alter the ORF schema</li>
+            </ul>
+
+            <h3>Tommy the Tapir</h3>
+            <ul>
+                <li>Tommy is a reference framework for issuing and claiming receipts</li>
+                <li>Recipta is a reference application for storing and using them</li>
+                <li>Either can be used independently</li>
+            </ul>
+        </section>
+
+        <section id="features">
+            <h2>What Recipta Can Do</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Receipt Management</h4>
+                    <ul>
+                        <li>View and search receipts</li>
+                        <li>Filter by:
+                            <ul>
+                                <li>Merchant</li>
+                                <li>Date range</li>
+                                <li>Amount</li>
+                                <li>Category</li>
+                            </ul>
+                        </li>
+                        <li>Validate ORF conformance</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h4>Analysis (User-Initiated)</h4>
+                    <ul>
+                        <li>Generate expense summaries</li>
+                        <li>Create budget journals</li>
+                        <li>Produce exportable reports</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h4>AI-Assisted Insights (Optional)</h4>
+                    <p>If explicitly enabled by the user, Recipta can:</p>
+                    <ul>
+                        <li>Analyze receipts locally or via user-approved AI services</li>
+                        <li>Generate:
+                            <ul>
+                                <li>Expense reports</li>
+                                <li>Spending insights</li>
+                                <li>Period summaries</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>No receipt data is shared without consent.</p>
+                </div>
+            </div>
+
+            <h3>What Recipta Does Not Do</h3>
+            <ul>
+                <li>No payment processing</li>
+                <li>No bank integration</li>
+                <li>No automatic cloud backups</li>
+                <li>No merchant tracking</li>
+                <li>No advertising</li>
+                <li>No data resale</li>
+            </ul>
+            <div class="highlight">
+                <p>Recipta is a <strong>personal data tool</strong>, not a platform.</p>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <h2>High-Level Architecture</h2>
+            
+            <div class="architecture-diagram">
+                <img src="Recipta-Tommy-interaction.png" alt="Recipta-Tommy Interaction Diagram">
+                <p><em>All operations occur on-device unless explicitly authorized.</em></p>
+            </div>
+
+            <h3>Core Design Principles</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Local-First</h4>
+                    <p>All receipts are stored and processed locally by default. Network access is optional and explicit.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>Payment-Agnostic</h4>
+                    <p>Payment confirmation is external. Receipts may be asserted, confirmed, or verified independently of payment rails.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>POS-Optional</h4>
+                    <p>POS integration is opportunistic, not assumed. Human confirmation is a first-class verification mechanism.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>Event-Driven</h4>
+                    <p>Recipta emits structured events that other apps may subscribe to. Recipta is not a data silo.</p>
+                </div>
+            </div>
+
+            <h3>Receipt Lifecycle</h3>
+            <p>Recipta recognizes three receipt states: <strong>Draft → Confirmed → Verified</strong></p>
+            
+            <ul>
+                <li><strong>Draft:</strong> Generated before payment or confirmation. Useful for expense planning, audit trails.</li>
+                <li><strong>Confirmed:</strong> Explicitly acknowledged by cashier or system. Mirrors paper receipt authority.</li>
+                <li><strong>Verified:</strong> Cryptographically signed or cross-checked. Optional, not required.</li>
+            </ul>
+
+            <h3>Receipt Transport Mechanisms</h3>
+            <ul>
+                <li><strong>QR Codes:</strong> Most universal, suitable for inline ORF or receipt claims</li>
+                <li><strong>NFC:</strong> Tap-based convenience, payload size limited, typically carries receipt claims</li>
+                <li><strong>Web Links:</strong> Online commerce, progressive enhancement</li>
+            </ul>
+
+            <h3>POS Vendor Integration Reality</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Reality</th>
+                        <th>Implication</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>APIs are vendor-locked</td>
+                        <td>ORF cannot depend on them</td>
+                    </tr>
+                    <tr>
+                        <td>Auth required</td>
+                        <td>Not consumer-accessible</td>
+                    </tr>
+                    <tr>
+                        <td>Legacy systems exist</td>
+                        <td>Human confirmation required</td>
+                    </tr>
+                    <tr>
+                        <td>Receipt ≠ payment</td>
+                        <td>Receipt must stand alone</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <p><strong>Conclusion:</strong> Recipta and ORF treat the receipt as an assertion, not a database extraction.</p>
+            </div>
+        </section>
+
+        <section id="privacy">
+            <h2>Privacy Model</h2>
+            <ul>
+                <li>All receipt data belongs to the user</li>
+                <li>Analysis is pull-based, not push-based</li>
+                <li>Exports are:
+                    <ul>
+                        <li>Time-bound</li>
+                        <li>Filtered</li>
+                        <li>Revocable</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="highlight">
+                 follows a principle of<p>Recipta <strong>minimum data movement</strong>.</p>
+            </div>
+        </section>
+
+        <section id="status">
+            <h2>Project Status</h2>
+            <p>Recipta is an <span class="status-badge">early-stage reference application</span>.</p>
+            
+            <h3>Current focus:</h3>
+            <ul>
+                <li>Storage model</li>
+                <li>ORF ingestion</li>
+                <li>Privacy guarantees</li>
+                <li>Analysis workflows</li>
+            </ul>
+            
+            <p>Implementation details will evolve as interfaces stabilize.</p>
+        </section>
+
+        <section id="contributing">
+            <h2>Contributing</h2>
+            <p>Recipta welcomes contributions from:</p>
+            <ul>
+                <li>Privacy engineers</li>
+                <li>Mobile developers</li>
+                <li>UX designers</li>
+                <li>Standards contributors</li>
+            </ul>
+            <p>Design discussion is encouraged before major implementation work.</p>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="https://github.com" class="github-link">View on GitHub</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Recipta Project. Open source software.</p>
+            <p>This project is open source. See the LICENSE file for details.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add active state to navigation based on scroll position
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
